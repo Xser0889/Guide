@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saint Kiara</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-container {
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-image {
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .main-image:hover {
+            transform: scale(1.05);
+        }
+
+        .question-button {
+            background: linear-gradient(45deg, #FF6B6B, #FFE66D);
+            border: none;
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .question-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #FF5252, #FFD54F);
+        }
+
+        .question-button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            font-size: 3em;
+            font-weight: bold;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result.si {
+            color: #4CAF50;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .result.no {
+            color: #F44336;
+            text-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #FFD700;
+            font-size: 60px;
+            pointer-events: none;
+            animation: sparkle 1s ease-out forwards;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .main-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Saint Kiara</h1>
+        <p style="font-size: 1.2em; margin-bottom: 30px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); font-style: italic;">the guide for all the ignorant</p>
+        
+        <div class="image-container">
+            <img src="saint kiara.png" 
+                 alt="Imagen misteriosa" 
+                 class="main-image">
+        </div>
+        
+        <button class="question-button" onclick="mostrarRespuesta()">
+            Ask
+        </button>
+        
+        <div id="resultado" class="result"></div>
+    </div>
+
+    <script>
+        function mostrarRespuesta() {
+            const resultado = document.getElementById('resultado');
+            const respuestas = ['YES', 'NO'];
+            const respuestaAleatoria = respuestas[Math.floor(Math.random() * respuestas.length)];
+            
+            resultado.classList.remove('show', 'si', 'no');
+            
+            setTimeout(() => {
+                resultado.textContent = respuestaAleatoria;
+                resultado.classList.add('show');
+                
+                if (respuestaAleatoria === 'YES') {
+                    resultado.classList.add('si');
+                } else {
+                    resultado.classList.add('no');
+                }
+                
+                crearChispas();
+            }, 100);
+        }
+        
+        function crearChispas() {
+            const container = document.querySelector('.container');
+            const numChispas = 6;
+            
+            for (let i = 0; i < numChispas; i++) {
+                setTimeout(() => {
+                    const chispa = document.createElement('div');
+                    chispa.className = 'sparkle';
+                    chispa.innerHTML = '✨';
+                    
+                    const x = Math.random() * 300 - 150;
+                    const y = Math.random() * 300 - 150;
+                    
+                    chispa.style.left = `${150 + x}px`;
+                    chispa.style.top = `${150 + y}px`;
+                    
+                    container.appendChild(chispa);
+                    
+                    setTimeout(() => {
+                        chispa.remove();
+                    }, 1000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
